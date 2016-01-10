@@ -1,4 +1,4 @@
-package lista4;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -63,30 +63,96 @@ public class RSA {
 
 	}
 
-	public static void decrypt(String encryptedInputFile, String resultFile) {
+	public static void decrypt2(String ciphertext, String resultFile) {
+		/*
+		 * Pobieranie klucza
+		 */
+		
 		try {
-			readDataFromPrivateKey();
+			File key = new File("private.key");
+			Scanner reader;
+			reader = new Scanner(key);
+			d = new BigInteger(reader.nextLine());
+			n = new BigInteger(reader.nextLine());
+
 			BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile));
-			FileInputStream fileInput = new FileInputStream(encryptedInputFile);
-			String contentOfInputFile = new String(Files.readAllBytes(Paths.get(encryptedInputFile)));
-			List<String> inputDataDividedIntoBlocks = divideIntoBlocksOfDate(contentOfInputFile);
-			for (String block : inputDataDividedIntoBlocks) {
-				BigInteger result = new BigInteger(block).modPow(d, n);
-				writer.write(result.toByteArray().toString());
+			FileInputStream fileInput = new FileInputStream(ciphertext);
+			int r;
+
+			/*
+			 * Deszyfrowanie
+			 */
+			String content = new String(Files.readAllBytes(Paths.get(ciphertext)));
+			String[] checked = content.split(" ");
+			for (String o : checked) {
+				BigInteger result = new BigInteger(o).modPow(d, n);
+				writer.write(new String(result.toByteArray()));
 			}
 			writer.close();
-			fileInput.close();	
-			System.out.println("Decryption done!");
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			fileInput.close();
+			System.out.println("Deszyfrowanie zakoñczone!");
+		} catch (Exception e2) {
+			e2.printStackTrace();
 		}
 	}
+
+	public static void decrypt(String encryptedInputFile, String resultFile) {
+
+		try {
+
+			readDataFromPrivateKey();
+
+			BufferedWriter writer = new BufferedWriter(new FileWriter(resultFile));
+
+			FileInputStream fileInput = new FileInputStream(encryptedInputFile);
+
+			String contentOfInputFile = new String(Files.readAllBytes(Paths.get(encryptedInputFile)));
+
+			List<String> inputDataDividedIntoBlocks = divideIntoBlocksOfDate(contentOfInputFile);
+			
+			for (String block : inputDataDividedIntoBlocks) {
+
+				BigInteger result = new BigInteger(block).modPow(d, n);
+
+				writer.write(result.toByteArray().toString());
+
+			}
+
+			writer.close();
+
+			fileInput.close();	
+
+			System.out.println("Decryption done!");
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+		}
+
+	}
+	
+	
 	private static List<String> divideIntoBlocksOfDate(String contentOfInputFile){
+		
+		
+
 		List<String> inputDataDividedIntoBlocks = new ArrayList<String>();
 		int index = 0;
+		BigInteger blockOfData = null;
+		String readChar= new String();
 		while (index < contentOfInputFile.length()) {
-		    inputDataDividedIntoBlocks.add(contentOfInputFile.substring(index, Math.min(index + n.intValue(),contentOfInputFile.length())));
-		    index += n.intValue();
+			readChar += contentOfInputFile.charAt(index);
+			blockOfData = new BigInteger(readChar.getBytes());
+			//blockOfData = blockOfData.divide(new BigInteger("2"));
+			if(blockOfData.compareTo(n) > 0){
+				inputDataDividedIntoBlocks.add(readChar);
+				readChar = new String();
+			}
+			
+			index++;
+		    //inputDataDividedIntoBlocks.add(contentOfInputFile.substring(index, Math.min(index + n.intValue(),contentOfInputFile.length())));
+		    //index += n.intValue();
 		}
 		return inputDataDividedIntoBlocks;
 	}

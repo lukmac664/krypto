@@ -45,7 +45,8 @@ public class PrimeThread implements Runnable {
 	public boolean testIfPrimeUsingRabinMillerMethod(BigInteger randomPrime) {
 		int k = 0;
 		BigInteger a, v, i;
-		BigInteger s = new BigInteger(randomPrime.subtract(ONE).toString());
+		int in = Integer.parseInt(randomPrime.subtract(ONE).toString());
+		BigInteger s = randomPrime.subtract(ONE);
 		BigInteger t = ZERO;
 
 		while ((s.mod(TWO).compareTo(ZERO) == 0)) {
